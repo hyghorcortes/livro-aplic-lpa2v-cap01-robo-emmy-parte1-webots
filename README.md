@@ -1,117 +1,44 @@
 # Exemplo de Aplicação: Robô Emmy – Parte 1 (Webots)
 
-Implementação em **Webots** do exemplo **“Exemplo de Aplicação: Robô Emmy – Parte 1”**, vinculado ao **Capítulo 1 – Para-analisadores** do livro **Aplicações de LPA2v**.
+Implementação em **Webots** do exemplo **“Exemplo de Aplicação: Robô Emmy – Parte 1”**, associado ao **Capítulo 1 – Para-analisadores** do livro *Aplicações de LPA2v*.
 
-Este repositório reúne o projeto do exemplo em formato publicável, com:
+Este repositório reúne a versão computacional do exemplo, incluindo:
 
-- controlador principal em Python;
-- mundo do Webots;
-- arquivos auxiliares do projeto;
-- documentação técnica e de uso;
-- arquivos de apoio para publicação no GitHub.
-
----
-
-## Visão geral
-
-A proposta deste exemplo é mostrar, de forma prática e didática, como conceitos da **LPA2v** podem ser aplicados a um problema de **robótica móvel autônoma** em ambiente simulado.
-
-O fluxo geral do projeto conecta:
-
-1. leitura de sensores do robô;
-2. construção dos graus de evidência;
-3. análise lógica por meio do **Para-Analisador**;
-4. decisão de movimento com base no estado lógico resultante;
-5. atuação nos motores dentro do Webots.
-
-A implementação atual é uma **releitura didática inspirada no Robô Emmy I**, preservando o núcleo lógico do exemplo original e incorporando mecanismos complementares de robustez para simulação moderna, como:
-
-- detecção de travamento (`stuck`);
-- rotinas de escape;
-- tratamento conservador em situações contraditórias;
-- suavização operacional entre leituras sucessivas.
+- o mundo principal no Webots;
+- o controlador `drive_my_robot.py`;
+- a organização do projeto para publicação e reaproveitamento em outros exemplos do livro;
+- uma documentação que conecta a implementação ao fluxo lógico oficial do capítulo.
 
 ---
 
-## Diagrama lógico do exemplo
+## Nome oficial do repositório
 
-```mermaid
-flowchart TD
-    A[Início da simulação] --> B[Leitura dos sensores do robô]
-    B --> C[Pré-processamento dos sinais]
-    C --> D[Construção dos graus de evidência μ e λ]
-    D --> E[Para-analisador LPA2v]
-    E --> F{Estado lógico / situação do ambiente}
+```text
+livro-aplic-lpa2v-cap01-robo-emmy-parte1-webots
+```
 
-    F -->|Livre / favorável| G[Seguir em frente]
-    F -->|Obstáculo à esquerda| H[Virar à direita]
-    F -->|Obstáculo à direita| I[Virar à esquerda]
-    F -->|Obstáculo frontal| J[Manobra de desvio]
-    F -->|Contradição elevada| K[Ação conservadora]
-    F -->|Robô preso / stuck| L[Rotina de escape]
+Este repositório foi pensado como **um exemplo individual dentro de uma coleção maior de repositórios do livro**.
 
-    G --> M[Atualização das velocidades dos motores]
-    H --> M
-    I --> M
-    J --> M
-    K --> M
-    L --> M
+Padrão sugerido para os próximos exemplos:
 
-    M --> N[Próximo passo de controle]
-    N --> B
+```text
+livro-aplic-lpa2v-capXX-nome-do-exemplo-parteY-tecnologia
 ```
 
 ---
 
 ## Objetivo do exemplo
 
-Este exemplo busca demonstrar como a **LPA2v** pode ser usada como mecanismo de apoio à decisão em um robô móvel, integrando percepção, interpretação lógica e ação.
+O objetivo deste projeto é mostrar, em ambiente simulado, como uma lógica inspirada no **Robô Emmy** pode ser implementada no **Webots** a partir de uma estrutura baseada em:
 
-Em termos didáticos, o projeto permite observar:
+1. leitura e filtragem de sensores;
+2. construção de grandezas intermediárias do ambiente;
+3. obtenção de graus de evidência `μ` e `λ`;
+4. avaliação por um **Para-Analisador LPA2v**;
+5. seleção de rotinas motoras coerentes com o estado lógico identificado;
+6. uso de camadas adicionais de robustez, como `escape`, `cooldown`, detecção de `stuck` e fallback contínuo.
 
-- como sensores podem ser convertidos em evidências;
-- como essas evidências são interpretadas por uma estrutura lógica;
-- como estados lógicos podem ser associados a ações motoras;
-- como decisões conservadoras podem ser úteis em cenários contraditórios;
-- como uma arquitetura simples pode ser explicada de forma reproduzível em simulação.
-
----
-
-## Estrutura do repositório
-
-```text
-.
-├── .github/
-├── assets/
-│   └── previews/
-├── controllers/
-│   └── drive_my_robot/
-│       └── drive_my_robot.py
-├── docs/
-│   ├── book-context.md
-│   ├── project-overview.md
-│   └── repository-structure.md
-├── libraries/
-├── plugins/
-│   ├── physics/
-│   ├── remote_controls/
-│   └── robot_windows/
-├── protos/
-├── worlds/
-│   ├── empty_emmy_v15_fov180.wbt
-│   ├── .empty_emmy_v15.wbproj
-│   ├── .empty_emmy_v15_fov180.wbproj
-│   └── arquivos auxiliares de mundo
-├── .gitignore
-├── CHANGELOG.md
-├── CITATION.cff
-├── CODE_OF_CONDUCT.md
-├── CONTRIBUTING.md
-├── IMPORTAR_NO_GITHUB.md
-├── LICENSE
-├── README.md
-└── SECURITY.md
-```
+Em termos conceituais, esta implementação é uma **releitura didática em Webots**, preservando o núcleo lógico do exemplo do livro e convertendo esse fluxo em uma arquitetura executável de controle robótico.
 
 ---
 
@@ -123,14 +50,15 @@ Em termos didáticos, o projeto permite observar:
 controllers/drive_my_robot/drive_my_robot.py
 ```
 
-Esse arquivo concentra a lógica de controle do exemplo. De forma geral, ele:
+Esse arquivo concentra a lógica do robô, incluindo:
 
-- lê os sensores do robô;
-- processa os sinais relevantes para navegação;
-- calcula valores associados à evidência;
-- trabalha com variáveis como `Gc` e `Gct`;
-- associa estados lógicos a rotinas de movimento;
-- aplica camadas de segurança para evitar comportamentos indesejados.
+- leitura dos sensores laterais;
+- filtragem das distâncias;
+- cálculo de variáveis intermediárias, como `dmin`, `err` e `head_on`;
+- geração e suavização de `μ` e `λ`;
+- chamada do Para-Analisador;
+- mapeamento do estado lógico para rotinas nominais;
+- tratamento de `avoid_mode`, `escape`, `cooldown` e fallback.
 
 ### Mundo principal
 
@@ -138,113 +66,189 @@ Esse arquivo concentra a lógica de controle do exemplo. De forma geral, ele:
 worlds/empty_emmy_v15_fov180.wbt
 ```
 
-Esse é o ambiente principal do exemplo no Webots.
+Esse é o cenário principal para execução do exemplo no Webots.
 
 ---
 
-## Lógica geral do controlador
+## Estrutura do repositório
 
-O comportamento do robô pode ser entendido em quatro blocos:
-
-### 1. Percepção
-O robô lê informações dos sensores para inferir a condição do ambiente ao redor.
-
-### 2. Construção de evidência
-As leituras são tratadas para compor graus de evidência favorável e desfavorável.
-
-### 3. Análise lógica
-Os valores são interpretados no domínio lógico da **LPA2v**, produzindo indicadores que orientam a decisão.
-
-### 4. Ação motora
-O estado resultante é convertido em ação: avançar, virar, desviar, recuar ou escapar.
+```text
+.
+├── controllers/
+│   └── drive_my_robot/
+│       └── drive_my_robot.py
+├── worlds/
+│   └── empty_emmy_v15_fov180.wbt
+├── libraries/
+├── plugins/
+├── protos/
+├── docs/
+├── assets/
+├── .github/
+├── README.md
+├── LICENSE
+├── CITATION.cff
+├── CONTRIBUTING.md
+├── CODE_OF_CONDUCT.md
+├── SECURITY.md
+├── CHANGELOG.md
+├── .gitignore
+└── IMPORTAR_NO_GITHUB.md
+```
 
 ---
 
 ## Como executar
 
-### 1. Abra o projeto no Webots
-Abra o arquivo abaixo no Webots:
+### 1. Abrir o mundo no Webots
+
+Abra o arquivo:
 
 ```text
 worlds/empty_emmy_v15_fov180.wbt
 ```
 
-### 2. Verifique o controlador
-O mundo está configurado para utilizar o controlador:
+### 2. Conferir o controlador do robô
+
+O mundo já está preparado para usar:
 
 ```text
 controller "drive_my_robot"
 ```
 
-### 3. Inicie a simulação
-Ao executar a simulação, o controlador Python será carregado automaticamente.
+### 3. Executar a simulação
 
-### 4. Observe o console
-Durante a execução, o console pode exibir informações úteis de depuração, como:
+Ao iniciar a simulação, o console do controlador deve exibir informações de depuração relacionadas a:
 
-- leituras dos sensores;
-- valores de `μ` e `λ`;
+- sensores;
+- distâncias filtradas;
+- `μ` e `λ`;
 - estado lógico atual;
 - `Gc` e `Gct`;
-- rotina nominal e rotina efetivamente aplicada;
-- indicadores como `escape`, `avoid` e `stuck`.
+- rotina nominal e rotina executada;
+- ativação de `escape`, `cooldown`, `avoid_mode` e `stuck`.
 
 ---
 
-## Requisitos
+## Fluxo lógico do controlador
 
-Para executar este exemplo, recomenda-se:
+O diagrama abaixo é uma **versão simplificada em Mermaid** do fluxo oficial do livro. Ele foi reduzido para facilitar a leitura no GitHub, mas preserva a mesma espinha dorsal da figura oficial:
 
-- **Webots R2025a** ou versão compatível com o mundo fornecido;
-- Python integrado ao próprio Webots;
-- ambiente capaz de abrir projetos `.wbt`.
+- inicialização;
+- laço principal do Webots;
+- leitura e filtragem dos sensores;
+- cálculo de `μ` e `λ`;
+- Para-Analisador;
+- decisão entre rotina nominal, escape e fallback;
+- envio de velocidades aos motores.
 
-Este exemplo não exige, em princípio, instalação adicional de bibliotecas externas via `pip`.
+```mermaid
+flowchart TD
+    A[Início / inicialização] --> B[Configurar motores, sensores e parâmetros]
+    B --> C[Loop principal do Webots]
 
----
+    C --> D[Ler ds_left e ds_right]
+    D --> E[Filtrar distâncias com EMA]
+    E --> F[Calcular dmin, err e head_on]
+    F --> G[Definir turn_dir]
+    G --> H{Warmup dos filtros concluído?}
 
-## Organização dentro da coleção do livro
+    H -->|Não| I[Andar devagar em linha reta]
+    I --> Z[Enviar velocidades aos motores]
 
-Este repositório foi concebido como **um repositório individual dentro de uma coleção maior de exemplos do livro**.
+    H -->|Sim| J[Calcular μ e λ]
+    J --> K[Aplicar EMA e limiter de slew em μ e λ]
+    K --> L[Clamp em 0..1]
+    L --> M[Para-Analisador: obter state, Gc e Gct]
+    M --> N[Mapear state para rotina nominal R1...R13]
+    N --> O[Atualizar avoid_mode, histórico e stuck]
+    O --> P{Perigo forte ou stuck?}
 
-A convenção adotada para os repositórios é:
+    P -->|Sim| Q[Ativar máquina de estados ESCAPE]
+    P -->|Não| R{ESCAPE ativo?}
+    Q --> R
 
-```text
-livro-aplic-lpa2v-capXX-nome-do-exemplo-parteY-tecnologia
+    R -->|Sim| S[Executar modo ESCAPE<br/>ré curva / pivô / saída lenta]
+    S --> Z
+
+    R -->|Não| T{Cooldown ou rotina do artigo ativos?}
+    T -->|Sim| U[Executar rotina atual]
+    T -->|Não| V{Estado estável por alguns ciclos?}
+    V -->|Sim| W[Iniciar rotina nominal R1...R13]
+    W --> U
+
+    V -->|Não| X[Controle contínuo de fallback<br/>velocidade base + correção lateral + repulsão]
+    X --> Y[Aplicar mínimos de giro, head_on e wander]
+    Y --> Z
+
+    U --> Z
+    Z --> C
 ```
 
-Nome oficial deste repositório:
+---
 
-```text
-livro-aplic-lpa2v-cap01-robo-emmy-parte1-webots
-```
+## Conexão entre o Mermaid e a figura oficial do livro
 
-Essa organização facilita:
+Para manter aderência ao diagrama oficial, a simplificação acima preserva os mesmos blocos conceituais principais:
 
-- padronização entre capítulos;
-- crescimento da coleção de exemplos;
-- manutenção de repositórios independentes;
-- associação clara entre capítulo, exemplo e tecnologia.
+1. **Inicialização**  
+   Corresponde aos blocos de início, configuração de motores, sensores e parâmetros.
+
+2. **Pré-processamento sensorial**  
+   Corresponde à leitura de `ds_left` e `ds_right`, filtragem por EMA e cálculo de `dmin`, `err` e `head_on`.
+
+3. **Fase de warmup**  
+   Mantém a ideia de alguns passos iniciais em movimento simples até estabilizar os filtros.
+
+4. **Construção das evidências**  
+   Preserva o cálculo, suavização e limitação de `μ` e `λ`.
+
+5. **Para-Analisador e estado lógico**  
+   Mantém a obtenção de `state`, `Gc` e `Gct`, seguida do mapeamento para rotinas nominais.
+
+6. **Camada de robustez**  
+   Preserva a lógica de `avoid_mode`, histórico, detecção de `stuck`, ativação de `escape` e janela de `cooldown`.
+
+7. **Decisão final de movimento**  
+   Resume três caminhos principais do fluxo oficial:
+   - **escape**;
+   - **rotina nominal do artigo**;
+   - **fallback contínuo**.
+
+8. **Ação motora e realimentação**  
+   Finaliza com o envio das velocidades aos motores e retorno ao loop principal do Webots.
 
 ---
 
-## Publicação no GitHub
+## Interpretação conceitual do exemplo
 
-Este repositório já inclui arquivos úteis para publicação aberta e organizada no GitHub:
+Do ponto de vista do livro, este exemplo é importante porque mostra que a LPA2v não aparece apenas como um elemento teórico isolado. Ela participa do ciclo completo de controle:
+
+- os sensores alimentam a construção das evidências;
+- o Para-Analisador resume a situação lógica do ambiente;
+- o estado lógico influencia a rotina motora selecionada;
+- mecanismos de segurança evitam comportamento instável ou travamento.
+
+Assim, o projeto combina:
+
+- **interpretação lógica do ambiente**;
+- **decisão discreta por rotinas**;
+- **proteções práticas de navegação**;
+- **execução em tempo de simulação**.
+
+---
+
+## Publicação e organização acadêmica
+
+Este repositório já inclui arquivos auxiliares para publicação e manutenção no GitHub:
 
 - `LICENSE`
-- `README.md`
 - `CITATION.cff`
 - `CONTRIBUTING.md`
 - `CODE_OF_CONDUCT.md`
 - `SECURITY.md`
-- `.github/`
-
-As instruções complementares de envio e organização estão em:
-
-```text
-IMPORTAR_NO_GITHUB.md
-```
+- `CHANGELOG.md`
+- `IMPORTAR_NO_GITHUB.md`
 
 ---
 
@@ -257,45 +261,12 @@ Use o arquivo `CITATION.cff` ou adapte a referência abaixo:
   author  = {Hyghor Miranda Côrtes and Paulo Santos},
   title   = {Exemplo de Aplicação: Robô Emmy - Parte 1 (Webots)},
   year    = {2026},
-  version = {1.0.0},
-  note    = {Repositório: livro-aplic-lpa2v-cap01-robo-emmy-parte1-webots}
+  version = {1.0.0}
 }
 ```
 
 ---
 
-## Contribuições
-
-Sugestões de melhoria, correções e extensões são bem-vindas.
-
-Leia antes:
-
-- `CONTRIBUTING.md`
-- `CODE_OF_CONDUCT.md`
-
----
-
-## Limitações e escopo
-
-Este repositório tem foco **didático e acadêmico**.
-
-Ele foi estruturado para:
-
-- apoiar o estudo de LPA2v aplicada;
-- documentar um exemplo reproduzível em Webots;
-- servir de base para outros exemplos do livro.
-
-Dependendo da evolução do projeto, versões futuras podem incluir:
-
-- novas variações do cenário;
-- diagramas adicionais;
-- vídeos ou animações de demonstração;
-- documentação mais detalhada do controlador.
-
----
-
 ## Licença
 
-Este projeto está distribuído sob a licença **MIT**.
-
-Consulte o arquivo `LICENSE` para os detalhes.
+Este repositório está distribuído sob a licença **MIT**.
