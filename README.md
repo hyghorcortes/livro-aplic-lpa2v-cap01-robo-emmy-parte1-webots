@@ -59,7 +59,7 @@ flowchart TB
 
     J --> K[Aplicar EMA e limiter<br/>de slew em μ e λ]
     K --> L[Clamp em<br/>0..1]
-    L --> M[Para Analisador:<br/>obter state, Gc, Gct]
+    L --> M[Para-Analisador:<br/>obter state, Gc, Gct]
     M --> N[Mapear state para rotina<br/>normal R1...R13]
     N --> O[Atualizar<br/>avoid_mode]
     O --> P[Atualizar histórico e<br/>detectar stuck]
@@ -124,7 +124,7 @@ Nos primeiros passos, o sistema mantém um comportamento mais simples e conserva
 
 ### 4. Cálculo das evidências e análise paraconsistente
 
-Depois do warmup, o controlador calcula `μ_raw` e `λ_raw`, suaviza esses sinais, aplica limites e executa o **Para Analisador**, que fornece `state`, `Gc` e `Gct`.
+Depois do warmup, o controlador calcula `μ_raw` e `λ_raw`, suaviza esses sinais, aplica limites e executa o **Para-Analisador**, que fornece `state`, `Gc` e `Gct`.
 
 ### 5. Rotina normal, avoid mode e stuck
 
