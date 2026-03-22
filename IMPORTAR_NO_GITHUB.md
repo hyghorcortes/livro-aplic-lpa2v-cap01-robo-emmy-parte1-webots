@@ -3,7 +3,7 @@
 ## Nome sugerido do repositório
 
 ```text
-livro-lpa2v-cap01-robo-emmy-parte1-webots
+livro-aplic-lpa2v-cap01-robo-emmy-parte1-webots
 ```
 
 ## Descrição curta sugerida
@@ -34,7 +34,7 @@ git init
 git branch -M main
 git add .
 git commit -m "Initial commit: Robô Emmy - Parte 1 (Webots)"
-git remote add origin https://github.com/SEU-USUARIO/livro-lpa2v-cap01-robo-emmy-parte1-webots.git
+git remote add origin https://github.com/hyghorcortes/livro-aplic-lpa2v-cap01-robo-emmy-parte1-webots.git
 git push -u origin main
 ```
 

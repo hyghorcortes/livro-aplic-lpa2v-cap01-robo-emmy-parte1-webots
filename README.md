@@ -115,13 +115,13 @@ Ao iniciar a simulação, o controlador Python será carregado e o console exibi
 Este repositório foi pensado para ser **um repositório individual de um conjunto maior de exemplos do livro**. A convenção sugerida é:
 
 ```text
-livro-lpa2v-capXX-nome-do-exemplo-parteY-tecnologia
+livro-aplic-lpa2v-capXX-nome-do-exemplo-parteY-tecnologia
 ```
 
 Nome sugerido deste repositório:
 
 ```text
-livro-lpa2v-cap01-robo-emmy-parte1-webots
+livro-aplic-lpa2v-cap01-robo-emmy-parte1-webots
 ```
 
 ## Publicação no GitHub
