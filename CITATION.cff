@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite it using the metadata below."
+title: "Exemplo de Aplicação: Robô Emmy - Parte 1 (Webots)"
+abstract: "Implementação em Webots de um controlador didático inspirado no robô Emmy I, usando LPA2v, Para-Analisador em 12 estados e rotinas motoras associadas a estados lógicos."
+type: software
+authors:
+  - family-names: "Miranda Côrtes"
+    given-names: "Hyghor"
+    email: "hyghorcortes@gmail.com"
+  - family-names: "Santos"
+    given-names: "Paulo"
+    email: "paedusan@gmail.com"
+repository-code: "https://github.com/SEU-USUARIO/livro-lpa2v-cap01-robo-emmy-parte1-webots"
+license: "MIT"
+version: "1.0.0"
+date-released: "2026-03-22"
+keywords:
+  - LPA2v
+  - paraconsistent logic
+  - Webots
+  - robotics
+  - mobile robot
+  - para-analyzer
+  - Emmy robot

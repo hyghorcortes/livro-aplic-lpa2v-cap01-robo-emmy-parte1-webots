@@ -1,0 +1,28 @@
+# Estrutura sugerida para a coleção do livro
+
+## Camada 1 — repositório-hub
+
+Um repositório central pode listar todos os exemplos do livro.
+
+Exemplo:
+
+```text
+livro-lpa2v-lf-exemplos
+```
+
+## Camada 2 — um repositório por exemplo
+
+Cada exemplo prático pode ter seu próprio repositório.
+
+Padrão sugerido:
+
+```text
+livro-lpa2v-capXX-nome-do-exemplo-parteY-tecnologia
+```
+
+## Vantagens
+
+- organização clara;
+- melhor citabilidade;
+- versionamento separado por exemplo;
+- facilidade para anexar links no livro.
