@@ -1,6 +1,6 @@
-# Robô Emmy - Parte 1 (Webots)
+# Livro Aplicações de LPA2v — Capítulo 1: Robô Emmy - Parte 1 (Webots)
 
-Implementação em Webots do exemplo **"Robô Emmy - Parte 1"**, vinculada ao livro **Aplicações de LPA2v**.
+Implementação em Webots do exemplo **"Robô Emmy - Parte 1"**, pertencente ao **Capítulo 1** do livro **Aplicações de LPA2v**.
 
 Este repositório reúne a simulação, o controlador e a documentação do exemplo, mantendo a lógica central do fluxo oficial do capítulo: leitura dos sensores, filtragem, cálculo de evidências, decisão paraconsistente, tratamento de escape, rotinas do artigo e fallback contínuo.
 
