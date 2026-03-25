@@ -1,4 +1,4 @@
-# livro-aplic-lpa2v-cap01-robo-emmy-parte1-webots
+# Robô Emmy - Parte 1 (Webots)
 
 Implementação em Webots do exemplo **"Robô Emmy - Parte 1"**, vinculada ao livro **Aplicações de LPA2v**.
 
